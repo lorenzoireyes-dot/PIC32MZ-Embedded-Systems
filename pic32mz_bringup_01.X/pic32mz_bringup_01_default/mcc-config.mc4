@@ -1,0 +1,47 @@
+configVersion: 1.0.0
+coreVersion: 5.9.0
+spaHostVersion: 1.3.0
+device: PIC32MZ2048EFM144
+deviceLibrary: {}
+groupModules: []
+modules:
+- BSP_PIC32MZ_EF_Starter_Kit
+- core
+- dfp
+generatedFileHashHistoryMap:
+- file: ..\src\config\default\bsp\bsp.c
+  hash: 9359a3559e2ada22752465e4d372cd65f481e1875cd14b827c88a323e5ea36d0
+- file: ..\src\config\default\bsp\bsp.h
+  hash: 6f607e0ed88612c26922cd6429b575d942564638aab73b79563070b624d8ccbd
+- file: ..\src\config\default\definitions.h
+  hash: 2437ee82549089e43c1f11b99babdf1ad7d642c42409e070b7192003fb2fc3fb
+- file: ..\src\config\default\device.h
+  hash: 4d4341a6f9628cea0bf73f980b639f7cb81089e55a60ad7e434be2a71e477442
+- file: ..\src\config\default\exceptions.c
+  hash: 82709bfd82fed03ddfd58e1626839314fc690a3ebafa92dffd31c667818976e9
+- file: ..\src\config\default\initialization.c
+  hash: fc8c4485281dd42cd425e8e20de2a38c787927e17b10816230def88a68095b55
+- file: ..\src\config\default\interrupts.c
+  hash: 797936386be1072a51a41ed55d38dc4a8ed2bbf29a0a6e89fba8ee6651ac3610
+- file: ..\src\config\default\interrupts.h
+  hash: 2b6f3a9da8b2f61b5ea3f584838ad851b151646b5fda0fb709cc05e65576fd37
+- file: ..\src\config\default\p32MZ2048EFM144.ld
+  hash: 46672b0a06fb42db5538d8da4ec36d5fcc0498ab85defe9a284be2853972bf25
+- file: ..\src\config\default\peripheral\clk\plib_clk.c
+  hash: 9affbbfb315ad2774cad29e8c3037c5d59650a9b51f0c632236f5fa472f3b5ce
+- file: ..\src\config\default\peripheral\clk\plib_clk.h
+  hash: 35384f2e13e59b7190bf77f6996baf3ea2377ec42df94979a6f793326def5255
+- file: ..\src\config\default\peripheral\evic\plib_evic.c
+  hash: 60b925c74bd2c846e289fd57ad959806593544003ab2cab1e13ea9982985d1e7
+- file: ..\src\config\default\peripheral\evic\plib_evic.h
+  hash: 73bc049398f746a582db9bc21ab53ba7e01c596559f3c8c449285028b5fe9d6e
+- file: ..\src\config\default\peripheral\gpio\plib_gpio.c
+  hash: 564c53cbdd88fe7e0612e2a7722d77acc395dbe234ab07eb1e150b9b2c87078e
+- file: ..\src\config\default\peripheral\gpio\plib_gpio.h
+  hash: 108fc503975f63e53fb4ce73a77f7bd0ff77c1bca060b91a7ad75b74c1861488
+- file: ..\src\config\default\stdio\xc32_monitor.c
+  hash: 858f8710d4287200a5ee7f3b3ad7c24f505aed9c05c16956ab0ff9f7bb162a6a
+- file: ..\src\config\default\toolchain_specifics.h
+  hash: 6aa2a02b87b7b0f0f0e37b83284e75f1db3857fca365f7a84f7969f71d120c41
+- file: ..\src\main.c
+  hash: d3c233d419e6304bfacbafc18cc68c0f5c26e365f23b20ea40ccfac458f664c5
