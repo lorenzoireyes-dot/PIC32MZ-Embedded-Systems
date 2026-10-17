@@ -24,7 +24,7 @@ Develop practical firmware engineering skills by configuring and programming rea
 | [01: GPIO and LED Control](pic32mz_bringup_01.X/README.md) | Configured a development environment and GPIO output, programmed the device, and verified onboard LED operation. | Completed on hardware |
 | [02: Timer Interrupt and LED Control](pic32mz_timer_interrupt_01.X/README.md) | Configured a hardware timer and interrupt service routine to toggle an onboard LED without continuous software polling. | Completed on hardware |
 
-Each milestone has its own MPLAB X project folder and documentation.
+Each milestone has its own MPLAB X project folder and documentation. Milestone 01 is retained as a documented historical exercise; its original application source was lost and intentionally will not be reconstructed.
 
 ## Development progression
 
@@ -39,11 +39,13 @@ Future areas of exploration may include additional timers, communication interfa
 * `pic32mz_bringup_01.X/`: GPIO and LED milestone project.
 * `pic32mz_timer_interrupt_01.X/`: Timer interrupt milestone project.
 
-### Source availability
+### Source availability and archive policy
 
-The current uploads include MPLAB X configuration and generated build artifacts, but the application C source files and some generated Harmony sources were not located during repository review. These files must be added before the repository can be considered a complete, independently rebuildable firmware archive. In particular, include the actual `main.c` for each milestone and its required Harmony `config/` source and header files.
+**Milestone 01:** The original GPIO LED blink `main.c` was lost. Because this was a small introductory exercise, it has been intentionally omitted rather than reconstructed. The milestone remains documented as hardware verified, but its retained MPLAB X folder is not a complete reproducible source archive. No replacement source upload is planned.
 
-Compiled `.hex` and `.elf` files are not substitutes for source code.
+**Milestone 02:** The timer interrupt project includes an application `main.c` in its project folder. Other generated project dependencies may be required for a complete independent rebuild; the repository should not be interpreted as a verified turnkey archive unless those dependencies are present.
+
+Compiled `.hex` and `.elf` files do not replace original source code. This documentation describes the files as they exist without requesting further uploads for the omitted first milestone.
 
 ## Engineering focus
 
