@@ -2,39 +2,29 @@
 
 ## Overview
 
-First firmware milestone using the **Microchip PIC32MZ EF Starter Kit**. Established the MPLAB X development environment, compiled embedded C firmware, programmed the physical microcontroller, and verified basic digital output operation using an onboard LED.
+Initial hardware bringup exercise using the **Microchip PIC32MZ EF Starter Kit**. Established the MPLAB X development workflow, compiled embedded C firmware, programmed the physical microcontroller, and verified GPIO output by blinking an onboard LED.
 
-## Objective
-
-Establish a working firmware workflow and confirm that a configured GPIO output can control an LED on the target board.
+**Status:** Completed and verified on physical hardware. Archived as a documented introductory milestone.
 
 ## Hardware and tools
 
-* Microchip PIC32MZ EF Starter Kit, PIC32MZ2048EFM144
-* MPLAB X IDE
-* XC32 compiler
-* Embedded C
-* MPLAB Code Configurator and generated peripheral support
+- Microchip PIC32MZ EF Starter Kit, PIC32MZ2048EFM144
+- MPLAB X IDE and XC32 compiler
+- Embedded C
+- MPLAB Code Configurator and generated peripheral support
 
 ## Work completed
 
-1. Created and configured an MPLAB X application project for the PIC32MZ target.
-2. Configured GPIO functionality for LED output.
-3. Built firmware with the XC32 compiler.
-4. Programmed the physical development board.
-5. Confirmed the onboard LED blinked as expected.
+1. Created and configured the MPLAB X project.
+2. Configured an onboard LED GPIO output.
+3. Compiled and programmed the firmware.
+4. Verified LED blinking on the physical board.
 
-## Verification
+## Source code availability
 
-**Hardware tested:** The LED blink application ran on the physical starter kit. This confirmed the basic edit, build, program, and test workflow.
+The original application `main.c` for this introductory milestone was lost. **We deliberately chose not to reconstruct or upload a replacement** because the milestone was a small foundational exercise and the development series has advanced to more substantive firmware work.
 
-## Skills demonstrated
-
-GPIO output, firmware compilation, device programming, basic debugging, and hardware verification.
-
-## Source code note
-
-The initial GitHub upload includes project settings and build artifacts. The application `main.c` and required Harmony source and header files were not found during the repository review and still need to be uploaded for a reproducible source project.
+The retained project directory contains available project metadata and build artifacts, but it is **not a complete reproducible source archive**. Compiled outputs are not equivalent to the missing original C source. No further source uploads are planned for Milestone 01.
 
 ## Next milestone
 
