@@ -22,9 +22,10 @@ Develop practical firmware engineering skills by configuring and programming rea
 | Milestone | Description | Status |
 | --- | --- | --- |
 | [01: GPIO and LED Control](pic32mz_bringup_01.X/README.md) | Configured a development environment and GPIO output, programmed the device, and verified onboard LED operation. | Completed on hardware |
-| [02: Timer Interrupt and LED Control](pic32mz_timer_interrupt_01.X/README.md) | Configured a hardware timer and interrupt service routine to toggle an onboard LED without continuous software polling. | Completed on hardware |\n| [03: Soccer Scoreboard](scoreboard/README.md) | Integrated scoreboard firmware with provisional 114 LED mapping and simulator testing. | Simulator verified; hardware pending |
+| [02: Timer Interrupt and LED Control](pic32mz_timer_interrupt_01.X/README.md) | Configured a hardware timer and interrupt service routine to toggle an onboard LED without continuous software polling. | Completed on hardware |
+| [03: Soccer Scoreboard](scoreboard/README.md) | Integrated scoreboard firmware, provisional 114 LED mapping, and initial WS2812B strip testing. | Simulator verified; physical LED debugging in progress |
 
-The introductory milestones have their own MPLAB X project folders. The scoreboard is the intended application showcase; its source files will be added after review. Milestone 01 is retained as a documented historical exercise; its original application source was lost and intentionally will not be reconstructed.
+The introductory milestones have their own MPLAB X project folders. The scoreboard is the intended application showcase; its source files have not yet been uploaded. Hardware debugging observations are documented separately from verified results. Milestone 01 is retained as a documented historical exercise; its original application source was lost and intentionally will not be reconstructed.
 
 ## Development progression
 
@@ -32,12 +33,13 @@ The introductory milestones have their own MPLAB X project folders. The scoreboa
 
 **Milestone 02** extends that foundation with peripheral driven timing and interrupt service routines.
 
-The integrated application is the [PIC32 Soccer Scoreboard](scoreboard/README.md). Its firmware has compiled and passed simulator tests; physical LED hardware integration remains pending.
+The integrated application is the [PIC32 Soccer Scoreboard](scoreboard/README.md). Its firmware compiled and passed simulator tests. Physical testing has begun with a 14 LED WS2812B strip, but the output currently exhibits incorrect colors and apparent LED indexing; full display validation remains pending.
 
 ## Repository contents
 
 * `pic32mz_bringup_01.X/`: GPIO and LED milestone project.
-* `pic32mz_timer_interrupt_01.X/`: Timer interrupt milestone project.\n* `scoreboard/`: Scoreboard application documentation; firmware upload pending.
+* `pic32mz_timer_interrupt_01.X/`: Timer interrupt milestone project.
+* `scoreboard/`: Scoreboard application documentation; firmware upload pending.
 
 ### Source availability and archive policy
 
