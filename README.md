@@ -23,7 +23,7 @@ Develop practical firmware engineering skills by configuring and programming rea
 | --- | --- | --- |
 | [01: GPIO and LED Control](pic32mz_bringup_01.X/README.md) | Configured a development environment and GPIO output, programmed the device, and verified onboard LED operation. | Completed on hardware |
 | [02: Timer Interrupt and LED Control](pic32mz_timer_interrupt_01.X/README.md) | Configured a hardware timer and interrupt service routine to toggle an onboard LED without continuous software polling. | Completed on hardware |
-| [03: Soccer Scoreboard](scoreboard/README.md) | Integrated scoreboard firmware, provisional 114 LED mapping, and initial WS2812B strip testing. | Simulator verified; physical LED debugging in progress |
+| [03: Soccer Scoreboard](scoreboard/README.md) | Integrated scoreboard firmware design, provisional 114 LED mapping, external 5 V power correction, and seven segment wiring documentation. | Simulation verified; LED hardware responding; addressing and full display pending |
 
 The introductory milestones have their own MPLAB X project folders. The scoreboard is the intended application showcase; its source files have not yet been uploaded. Hardware debugging observations are documented separately from verified results. Milestone 01 is retained as a documented historical exercise; its original application source was lost and intentionally will not be reconstructed.
 
@@ -33,7 +33,7 @@ The introductory milestones have their own MPLAB X project folders. The scoreboa
 
 **Milestone 02** extends that foundation with peripheral driven timing and interrupt service routines.
 
-The integrated application is the [PIC32 Soccer Scoreboard](scoreboard/README.md). Its firmware compiled and passed simulator tests. Physical testing has begun with a 14 LED WS2812B strip, but the output currently exhibits incorrect colors and apparent LED indexing; full display validation remains pending.
+The integrated application is the [PIC32 Soccer Scoreboard](scoreboard/README.md). Its firmware compiled and passed simulator tests. Physical WS2812B tests progressed to a regulated external 5 V supply and SN74AHCT125N level shifter. On November 9, connecting PIC32 ground to the shared LED supply ground restored LED command response. The previously observed one LED offset remains under investigation, and the proposed hidden status LED workaround has not yet been validated. The custom seven segment routing diagram and test photos are in the scoreboard's Pictures folder; the full display is still pending.
 
 ## Repository contents
 
