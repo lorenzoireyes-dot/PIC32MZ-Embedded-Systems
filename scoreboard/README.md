@@ -1,80 +1,109 @@
 # PIC32 Soccer Scoreboard Firmware
 
-An ongoing embedded C project for an LED soccer scoreboard controlled by a **Microchip PIC32MZ EF Starter Kit**. The design combines score and time display logic, timer interrupts, SPI based LED data generation, and a physical WS2812B LED display.
+An ongoing embedded C project for a soccer scoreboard driven by the **Microchip PIC32MZ EF Starter Kit (PIC32MZ2048EFM144)**. The application combines score and time display logic, timer interrupts, SPI based WS2812B signal generation, and a planned multi digit LED display.
 
-## Progress as of October 30, 2026
+## Progress as of November 9, 2026
 
-**Firmware simulation complete; physical LED interface under active troubleshooting.**
+**Firmware simulation passed. The external 5 V LED interface is now responding to PIC32 commands after correcting the ground reference. Individual LED addressing remains under investigation.**
 
-| Area | Current evidence | Status |
+| Area | Evidence | Status |
 | --- | --- | --- |
-| Embedded firmware build | MPLAB X / XC32 build completed | Passed |
-| Integrated simulator test | Scoreboard logic, timer, display encoding, WS2812B output generation, and integrated firmware tests passed | Passed in simulation |
-| Timer interrupt baseline | A separate known working timer interrupt project successfully blinked an onboard LED | Hardware verified in baseline project |
-| Test strip power and response | A 14 LED WS2812B strip has powered on and shown limited LED activity | Partial physical response |
-| Correct LED color and position | Unexpected white/color output and shifted LED behavior observed | **Unresolved** |
-| Full scoreboard integration | The complete display has not been assembled and validated | Pending |
+| Firmware build and integrated tests | MPLAB X / XC32 build and integrated scoreboard simulation tests passed | Verified in simulation |
+| Timer interrupt baseline | Separate timer milestone blinked an onboard LED | Verified on hardware |
+| External LED power | Regulated external 5 V supply powers the WS2812B test strip and level shifter | Working in current test |
+| PIC32 to strip signaling | LED commands resumed after joining PIC32 ground to external supply ground | Hardware response restored |
+| Individual LED addressing | Observed one LED offset / anomalous first LED behavior | Unresolved; workaround planned |
+| Seven segment display | Custom routing and numbering illustration uploaded | Design reference; not yet physically validated |
+| Full 114 LED scoreboard | Complete assembly, current distribution, and digit display test | Pending |
 
-The simulator results do **not** establish correct electrical timing, color ordering, or physical LED addressing.
+Simulation does not independently verify physical signal timing, color order, addressing, or full display operation.
 
-## Hardware
+## Hardware and interfaces
 
-| Component | Description |
+| Component | Details |
 | --- | --- |
-| Controller | PIC32MZ EF Starter Kit (PIC32MZ2048EFM144) |
-| LED test strip | Inland WS2812B, 5 V, 60 LEDs per meter |
-| Physical test segment | 14 LEDs |
-| Proposed level shifter | 74AHCT125 |
-| Proposed series data resistor | 330 Ω |
-| Development environment | MPLAB X, XC32, Harmony generated peripheral configuration |
+| Development board | PIC32MZ EF Starter Kit, PIC32MZ2048EFM144 |
+| Test LEDs | Inland WS2812B addressable RGB strip, 5 V, 60 LEDs/m |
+| Test length | Approximately 14 to 15 LEDs used during bring up |
+| Level shifter | SN74AHCT125N, powered by external 5 V |
+| LED supply | Separate regulated 5 V power supply |
+| Controller signal | RF5, configured for SPI1 data output |
+| Development tools | MPLAB X IDE, XC32, Harmony generated configuration |
 
-### Provisional wiring under test
+### Current test wiring
 
-- PIC32 J12 pin 19, **RF5 / SPI1 MOSI**, to a 74AHCT125 input.
-- 74AHCT125 output through a **330 Ω** series resistor to the LED strip's DIN.
-- PIC32 J12 pin 20 and LED power supply ground connected as a common reference.
-- LED strip and level shifter supplied from 5 V, subject to electrical and current capacity validation.
+- **PIC32 RF5** drives the corresponding SN74AHCT125N channel input.
+- The shifter output drives the WS2812B strip **DIN**.
+- The shifter and LEDs receive power from the **external 5 V supply**.
+- **PIC32 GND, SN74AHCT125N GND, LED strip GND, and external supply negative are electrically common.** This last connection was the critical hardware correction on November 9.
+- For SN74AHCT125N channel 1, pin 14 is VCC, pin 7 is GND, pin 2 is input 1A, pin 3 is output 1Y, and pin 1 (active low 1OE) must be connected low.
+- A 330 Ω series data resistor is part of the proposed interface design; its installation in the present test setup has not been separately verified.
 
-This is the documented test wiring, **not yet a validated final hardware interface**. The scoreboard's power distribution and completed wiring harness remain to be designed and tested.
+**Do not connect the external 5 V rail to a PIC32 GPIO.** The separate supplies can coexist as long as their grounds share a reference. Use only 5 V for the WS2812B strip; a separate strip accidentally exposed to 12 V stopped responding and was discarded.
 
-## LED mapping
+## November 9 hardware debugging results
 
-The firmware uses a **provisional 114 LED map**:
+The LED strip initially failed to respond after switching to an external 5 V supply. The level shifter and strip were already sharing supply and ground, **but the PIC32 ground was not connected to that network**. Adding the PIC32 ground connection restored responses to LED commands.
 
-- Eight seven segment digits.
-- Two physical LEDs per segment: 8 digits × 7 segments × 2 LEDs = **112 LEDs**.
-- Two additional colon LEDs.
-- **Total: 114 LEDs.**
+This observation identifies a missing signal reference as the cause of that particular nonresponse. It **does not** establish that the remaining LED address offset or first LED anomaly has been resolved.
 
-The mapped arrangement has not been physically implemented or checked against the final installation. LED density is **60 LEDs per meter** on the available test strip.
+### One LED offset and planned status indicator
 
-## Hardware bring up observations
+Earlier physical tests showed the first visible LED behaving abnormally, including instances where a command targeting software index 0 instead affected the next visible LED. Rather than treating this as a verified firmware indexing bug, the current practical plan is to **conceal the first physical LED and repurpose it as a status/power indicator** while mapping the visible scoreboard segments around the observed offset.
 
-During the October 30, 2026 test session:
+The exact physical to software index relationship must be confirmed using a repeatable individual pixel test before the workaround becomes a fixed mapping. A software controlled status LED indicates controller activity, not necessarily continuous power availability.
 
-1. Programming and firmware build operations succeeded, but reliable external LED operation was not obtained.
-2. One early test produced light on the first LED while the rest of the 14 LED segment remained dark.
-3. A direct GPIO high output check on RF5 was measured as 0 V during that particular test. This is a troubleshooting observation, **not proof of a defective MCU pin**.
-4. A previously working timer interrupt project was used to confirm that the PIC32 could execute firmware and blink an onboard LED.
-5. Subsequent strip tests showed unexpected LED colors and apparent index shifts, including white on LED 0 and differing red, green, and blue indications on successive LEDs. Disconnecting and reconnecting the data wire also changed the visible output.
+## Seven segment arrangement
 
-**No root cause has been confirmed.** Peripheral enabling, pin configuration, data signal generation, level shifting, LED strip condition, and data timing remain possible investigation areas. The observations do not establish whether the problem is hardware, firmware, configuration, or a combination.
+The preferred **physical wiring order** for one digit uses this deliberately nonstandard letter assignment:
 
-## Planned next validation
+```text
+       B (2)
+    A (1)  C (3)
+       G (7)
+    F (6)  D (4)
+       E (5)
+```
 
-1. Test with an alternative WS2812B strip to separate strip behavior from controller output.
-2. Confirm the RF5 peripheral configuration and verify the selected SPI output signal on the actual pin.
-3. Verify 5 V supply, common ground, level shifter wiring and enable state, and correct DIN orientation.
-4. Check the LED protocol waveform and color byte sequence with a scope or logic analyzer where available.
-5. Demonstrate repeatable individual LED selection and known red, green, and blue test patterns.
-6. Validate the physical 114 LED mapping and power distribution before full display assembly.
+This order was chosen to simplify strip routing. It is **not** the usual A at top seven segment convention. Digit lookup tables in the firmware must use this custom assignment or explicitly translate from standard segment names.
 
-### Photographic evidence
+The design diagram below illustrates the segment routing and continuous WS2812B data path.
 
-Photos of the malfunctioning LED test are planned but **have not yet been uploaded to this repository**. Once available, they should be labeled with the test setup, commanded output, observed LED order and colors, and date.
+![Seven segment wiring reference](Pictures/WS2812B%20Seven-Segment%20Scoreboard%20Wiring%20Guide.png)
 
-## Source code and reproducibility
+The illustration is a design aid, **not a validated electrical schematic or a confirmed final global LED index map**. Verify every number and strip orientation before using it to fabricate the display. Individual data strips must connect **DOUT to the next DIN**, while the 5 V and GND rails remain appropriately distributed.
 
-The integrated scoreboard firmware and simulator sources have **not yet been added** to the `scoreboard/` directory; currently this directory contains documentation. The separate [timer interrupt milestone](../pic32mz_timer_interrupt_01.X/README.md) demonstrates known working onboard LED activity, but it does not validate the scoreboard's external LED output.
+### Provisional full scoreboard allocation
 
-This record distinguishes **verified simulation results**, **partial hardware observations**, and **pending hardware validation**.
+The existing firmware design allocates:
+
+- 8 digits × 7 segments × 2 LEDs per segment = **112 display LEDs**.
+- 2 colon LEDs.
+- **114 mapped display LEDs** in total.
+
+The hidden status LED workaround may require **one additional physical LED or an adjustment to the indexing/allocation**; the final physical count has not yet been confirmed. Do not assume the illustrated four digit clock is the complete eight digit soccer scoreboard.
+
+## Photographic documentation
+
+The repository's [Pictures folder](Pictures/) includes photographs of the test setup and supporting images:
+
+- [IMG_5701.jpeg](Pictures/IMG_5701.jpeg)
+- [IMG_5715.jpeg](Pictures/IMG_5715.jpeg)
+- [Level shifter pinout](Pictures/SN74AHCT125NPinOut.jpg)
+- [Seven segment wiring guide](Pictures/WS2812B%20Seven-Segment%20Scoreboard%20Wiring%20Guide.png)
+
+Additional screenshots are retained in the same folder. These are evidence of the ongoing hardware and layout work; not every pictured configuration is necessarily the final validated build.
+
+## Next hardware validation
+
+1. Run a deterministic pixel test and record commanded software index versus physical LED position; confirm the status LED offset policy.
+2. Cycle through segments 1 to 7 individually using the preferred physical routing order.
+3. Display digits 0 through 9 with an explicitly documented lookup table for the custom A through G labels.
+4. Verify current, voltage at strip input and remote ends, signal integrity, and supply sizing before expanding to 114 or more physical LEDs.
+5. Confirm the global digit mapping and measure whether additional power injection is required at full scoreboard scale.
+
+## Source availability and limitations
+
+The integrated scoreboard firmware and simulator test sources have **not yet been uploaded** to `scoreboard/`. The separate [timer interrupt milestone](../pic32mz_timer_interrupt_01.X/README.md) demonstrates onboard timer interrupt functionality but does not by itself validate the scoreboard's complete external display.
+
+This README separates simulation results, observed hardware behavior, provisional design decisions, and work still awaiting validation.
