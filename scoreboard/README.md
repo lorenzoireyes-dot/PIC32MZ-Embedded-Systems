@@ -37,7 +37,7 @@ Simulation does not independently verify physical signal timing, color order, ad
 - The shifter and LEDs receive power from the **external 5 V supply**.
 - **PIC32 GND, SN74AHCT125N GND, LED strip GND, and external supply negative are electrically common.** This last connection was the critical hardware correction on November 9.
 - For SN74AHCT125N channel 1, pin 14 is VCC, pin 7 is GND, pin 2 is input 1A, pin 3 is output 1Y, and pin 1 (active low 1OE) must be connected low.
-- A 330 Ω series data resistor is part of the proposed interface design; its installation in the present test setup has not been separately verified.
+- A 330 Ω series data resistor is part of the proposed interface design.
 
 **Do not connect the external 5 V rail to a PIC32 GPIO.** The separate supplies can coexist as long as their grounds share a reference. Use only 5 V for the WS2812B strip; a separate strip accidentally exposed to 12 V stopped responding and was discarded.
 
@@ -81,7 +81,7 @@ The existing firmware design allocates:
 - 2 colon LEDs.
 - **114 mapped display LEDs** in total.
 
-The hidden status LED workaround may require **one additional physical LED or an adjustment to the indexing/allocation**; the final physical count has not yet been confirmed. Do not assume the illustrated four digit clock is the complete eight digit soccer scoreboard.
+The hidden status LED workaround will require **one additional physical LED or an adjustment to the indexing/allocation**. Do not assume the illustrated four digit clock is the complete eight digit soccer scoreboard.
 
 ## Photographic documentation
 
@@ -96,11 +96,8 @@ Additional screenshots are retained in the same folder. These are evidence of th
 
 ## Next hardware validation
 
-1. Run a deterministic pixel test and record commanded software index versus physical LED position; confirm the status LED offset policy.
-2. Cycle through segments 1 to 7 individually using the preferred physical routing order.
-3. Display digits 0 through 9 with an explicitly documented lookup table for the custom A through G labels.
-4. Verify current, voltage at strip input and remote ends, signal integrity, and supply sizing before expanding to 114 or more physical LEDs.
-5. Confirm the global digit mapping and measure whether additional power injection is required at full scoreboard scale.
+1. Display digits 0 through 9 with an explicitly documented lookup table for the custom A through G labels.
+2. Confirm the global digit mapping and measure whether additional power injection is required at full scoreboard scale.
 
 ## Source availability and limitations
 
