@@ -13,7 +13,7 @@ An ongoing embedded C project for a soccer scoreboard driven by the **Microchip 
 | External LED power | Regulated external 5 V supply powers the WS2812B test strip and level shifter | Working in current test |
 | PIC32 to strip signaling | LED commands resumed after joining PIC32 ground to external supply ground | Hardware response restored |
 | Individual LED addressing | Observed one LED offset / anomalous first LED behavior | Unresolved; workaround planned |
-| Seven segment display | Custom routing and numbering illustration uploaded | Design reference; not yet physically validated |
+| Seven segment display | Custom routing and numbering illustration uploaded | Design reference |
 | Full 114 LED scoreboard | Complete assembly, current distribution, and digit display test | Pending |
 
 Simulation does not independently verify physical signal timing, color order, addressing, or full display operation.
